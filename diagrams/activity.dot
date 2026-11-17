@@ -1,0 +1,26 @@
+digraph Activity {
+  graph [rankdir=TB, bgcolor="white", pad=0.35, nodesep=0.38, ranksep=0.52,
+         label="Расчёт стоимости доставки · вариант 4", labelloc=t,
+         fontname="Times New Roman", fontsize=18];
+  node [shape=box, style="rounded,filled", fontname="Times New Roman", fontsize=13,
+        color="#2F5597", fillcolor="#EAF2F8", margin="0.18,0.12"];
+  edge [fontname="Times New Roman", fontsize=11, color="#555555"];
+  start [label="Начало", shape=oval, fillcolor="#E2F0D9", color="#548235"];
+  input [label="Получить DeliveryRequest", shape=parallelogram,
+         fillcolor="#E4DFEC", color="#7030A0"];
+  factory [label="Получить политику:\nfactory.get(request.type())"];
+  supports [label="policy.supports(request)?", shape=diamond,
+            fillcolor="#FFF2CC", color="#BF9000"];
+  cost [label="policy.calculateCost(request)\nEXPRESS: max(1500, distance × 100) + amount × 0,01",
+        fillcolor="#DDEBF7"];
+  result [label="Вернуть стоимость", shape=parallelogram,
+          fillcolor="#E4DFEC", color="#7030A0"];
+  error [label="Выбросить IllegalArgumentException", fillcolor="#FCE4D6",
+         color="#C65911"];
+  end [label="Завершение", shape=oval, fillcolor="#E2F0D9", color="#548235"];
+  start -> input -> factory -> supports;
+  supports -> cost [label="да"];
+  supports -> error [label="нет"];
+  cost -> result -> end;
+  error -> end;
+}

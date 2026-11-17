@@ -1,0 +1,25 @@
+digraph Classes {
+  graph [rankdir=TB, bgcolor="white", pad=0.35, nodesep=0.35, ranksep=0.6,
+         label="Модель доставки · вариант 4", labelloc=t,
+         fontname="Times New Roman", fontsize=18];
+  node [shape=record, style=filled, fontname="Times New Roman", fontsize=12,
+        color="#2F5597", fillcolor="#F7FBFF", margin="0.15,0.1"];
+  edge [fontname="Times New Roman", fontsize=11, color="#555555"];
+  type [label="{DeliveryType|STANDARD\lEXPRESS\lPICKUP\l}"];
+  request [label="{DeliveryRequest|type: DeliveryType\ldistanceKm: double\lweightKg: double\lorderAmount: double\l}"];
+  policy [label="{«interface» DeliveryPolicy|+ supports(DeliveryRequest): boolean\l+ calculateCost(DeliveryRequest): double\l}"];
+  standard [label="{StandardCourierPolicy|+ supports(DeliveryRequest): boolean\l+ calculateCost(DeliveryRequest): double\l}"];
+  express [label="{ExpressPolicy|лимит: 10 кг\lминимум: 1500 ₽\l+ supports(DeliveryRequest): boolean\l+ calculateCost(DeliveryRequest): double\l}", fillcolor="#FFF2CC"];
+  pickup [label="{PickupPolicy|+ supports(DeliveryRequest): boolean\l+ calculateCost(DeliveryRequest): double\l}"];
+  factory [label="{DeliveryPolicyFactory|+ get(DeliveryType): DeliveryPolicy\l}"];
+  service [label="{DeliveryService|- factory: DeliveryPolicyFactory\l|+ calculate(DeliveryRequest): double\l+ addExpressOnly(DeliveryService,\l  List\<DeliveryRequest\>):\l  List\<DeliveryRequest\>\l}", fillcolor="#E2F0D9"];
+  standard -> policy [label="implements", arrowhead=empty, style=dashed];
+  express -> policy [label="implements", arrowhead=empty, style=dashed];
+  pickup -> policy [label="implements", arrowhead=empty, style=dashed];
+  factory -> policy [label="creates", style=dashed, arrowhead=open];
+  service -> factory [label="uses", arrowhead=open];
+  service -> request [label="processes", style=dashed, arrowhead=open];
+  request -> type [label="type", style=dashed, arrowhead=open];
+  standard -> express [style=invis, weight=100];
+  express -> pickup [style=invis, weight=100];
+}

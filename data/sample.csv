@@ -1,0 +1,14 @@
+
+type;distanceKm;weightKg;orderAmount;expected
+STANDARD;12;4.5;12000;OK:cost=600.0
+EXPRESS;5;1.2;4000;OK:cost=1540.0
+PICKUP;0;10;8000;OK:cost=0.0
+STANDARD;5;1.0;500;OK:cost=500.0
+EXPRESS;20;5.0;10000;OK:cost=2100.0
+STANDARD;10;25;5000;SKIP:weight exceeds limit
+EXPRESS;5;15;3000;SKIP:weight exceeds limit
+EXPRESS;0;10;0;OK:cost=1500.0
+EXPRESS;5;10.1;4000;SKIP:weight exceeds limit
+EXPRESS;10;9;5000;OK:cost=1550.0
+EXPRESS;15;5;2000;OK:cost=1520.0
+STANDARD;15;20;10000;OK:cost=750.0
